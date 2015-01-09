@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Brain Training Notice</title>
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+}
+body {
+    line-height: 1.4;
+    font-size: 14px;
+    font-family: sans-serif;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+.btnleft {
+    display: block;
+    width: 400px;
+    height: 195px;
+    margin: 0 auto 10px;
+    border-radius: 3px;
+    background: #000;
+    color: #fff;
+    line-height: 44px;
+    text-align: left;
+    text-decoration: none;
+}
+.btnright {
+    display: block;
+    width: 400px;
+    height: 195px;
+    margin: 0 auto 10px;
+    border-radius: 3px;
+    background: #000;
+    color: #fff;
+    line-height: 44px;
+    text-align: right;
+    text-decoration: none;
+}
+</style>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="-1">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no">
+</head>
+<body>
+<div class="js-bridge" data-path="/market" data-args='{ "_url" : "market://details?id=com.jamjamgamestudio.countcrush"  }' > <img src="https://manson828.github.io/Google_1024_500_CountCrush.png" border="0" width="400px"> </div>
+<div class="js-bridge" data-path="/market" data-args='{ "_url" : "market://details?id=com.jamjamgamestudio.criticalspeed"  }' > <img src="https://manson828.github.io/Google_1024_500_CriticalSpeed.png" border="0" style="max-width: 400px; height: auto;"> </div>
+<script src="http://manson828.github.io/tappie/tappie.min.js"></script>
+<script src="webview.js"></script>
+<!-- 웹 페이지 크기 및 위치 자동 고정하기 -->
+<script>
+window.onfocus=function(){}
+window.onload=function(){
+	window.focus(); // 현재 window 즉 익스플러러를 윈도우 최상단에 위치
+	window.moveTo(0,0); // 웹 페이지의 창 위치를 0,0 (왼쪽 최상단) 으로 고정
+	window.resizeTo(800,480); // 웹페이지의 크기를 가로 1280 , 세로 800 으로 고정(확장 및 축소
+}
+</script>
+<script>
+(function (global, document) {
+    var Webview = global.WebViewMediator;
+
+    function addListener() {
+        var elements = document.getElementsByClassName("js-bridge"),
+            el, target, path, args;
+
+        for (var i = 0, l = elements.length; i < l; ++i) {
+            el = elements[i];
+
+            el.addEventListener("tap", function (event) {
+                target = event.currentTarget;
+                path   = target.getAttribute("data-path");
+                args   = target.getAttribute("data-args");
+
+                Webview.Call(path, args ? JSON.parse(args) : null);
+            }, false);
+        }
+    }
+
+    function handleLoadUrl() {
+        var elements = document.getElementsByClassName("js-load-url"),
+            el, href;
+
+        for (var i = 0, l = elements.length; i < l; ++i) {
+            el = elements[i];
+
+            el.addEventListener("tap", function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                target = event.currentTarget;
+                href   = target.getAttribute("href");
+
+                if (!href) {
+                    return;
+                }
+
+                Webview.Call("/show_indicator");
+                location.assign(href);
+            }, false);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        Webview.Call("/hide_indicator");
+
+        addListener();
+        handleLoadUrl();
+    }, false);
+})(this, this.document);
+</script>
+</body>
+</html>
